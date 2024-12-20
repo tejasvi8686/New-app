@@ -9,7 +9,7 @@ const Page = () => {
     <View style={styles.container}>
       <Text>Welcome Page</Text>
       <TouchableOpacity onPress={() => router.replace("/(tabs)")}>
-        <Text>Go to Home Screen</Text>
+        <Text style={{ color: "blue" }}>Go to Tabs</Text>
       </TouchableOpacity>
     </View>
   );
