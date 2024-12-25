@@ -4,11 +4,10 @@ import {
   StyleSheet,
   Dimensions,
   Image,
-  Animated,
 } from "react-native";
 import React from "react";
 import { NewsDataType } from "@/types";
-import {
+import Animated ,{
   Extrapolation,
   interpolate,
   SharedValue,
@@ -50,7 +49,7 @@ export default function SliderItem({ sliderItem, index, scrollX }: Props) {
   });
   return (
     <Animated.View
-      style={styles.itemWrapper}
+      style={[styles.itemWrapper, rnStyle]}
       key={sliderItem.article_id}
     >
       <Image source={{ uri: sliderItem.image_url }} style={styles.image} />
