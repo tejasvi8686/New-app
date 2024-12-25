@@ -6,6 +6,7 @@ import SearchBar from "@/components/Searchbar";
 import axios from "axios";
 import { NewsDataType } from "@/types";
 import BreakingNews from "@/components/BreakingNews";
+import Categories from "@/components/Categories";
 
 type Props = {};
 
@@ -43,6 +44,7 @@ const Page = (props: Props) => {
       ) : (
         <BreakingNews newList={breakingNews} />
       )}
+      <Categories />
     </View>
   );
 };
