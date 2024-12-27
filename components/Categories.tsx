@@ -9,7 +9,11 @@ import React, { useRef, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import newsCategoryList from "@/constants/Categories";
 
-export default function Categories() {
+type Props = {
+  onCategoryChange: (category: string) => void;
+};
+
+export default function Categories({ onCategoryChange }: Props) {
   const scrollRef = React.useRef<ScrollView>(null);
   const itemRef = useRef<TouchableOpacity[] | null[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -21,6 +25,8 @@ export default function Categories() {
     selected?.measure((x) => {
       scrollRef.current?.scrollTo({ x: x-20, y: 0, animated: true });
     });
+
+    onCategoryChange(newsCategoryList[index].slug);
   };
 
   return (

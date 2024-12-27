@@ -1,4 +1,10 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Header from "@/components/Header";
@@ -7,21 +13,24 @@ import axios from "axios";
 import { NewsDataType } from "@/types";
 import BreakingNews from "@/components/BreakingNews";
 import Categories from "@/components/Categories";
+import NewsList from "@/components/NewsList";
 
 type Props = {};
 
 const Page = (props: Props) => {
   const { top: safeTop } = useSafeAreaInsets();
   const [breakingNews, setBreakingNews] = useState<NewsDataType[]>([]);
+  const  [news, setNews] = useState<NewsDataType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getBreakingNews();
+    getNews();
   }, []);
 
   const getBreakingNews = async () => {
     try {
-      const URL = `https://newsdata.io/api/1/news?apikey=${process.env.EXPO_PUBLIC_API_KEY}&country=in&language=en&image=1&removeduplicate=1&size=5`;
+      const URL = `https://newsdata.io/api/1/news?apikey=${process.env.EXPO_PUBLIC_API_KEY}&language=en&image=1&removeduplicate=1&size=5`;
       const response = await axios.get(URL);
       //console.log(response.data);
 
@@ -35,8 +44,28 @@ const Page = (props: Props) => {
     }
   };
 
+  const getNews = async () => {
+    try {
+      const URL = `https://newsdata.io/api/1/news?apikey=${process.env.EXPO_PUBLIC_API_KEY}&language=en&image=1&removeduplicate=1&size=10`;
+      const response = await axios.get(URL);
+      //console.log(response.data);
+
+      if (response && response.data) {
+        setNews(response.data.results);
+        console.log(response.data.results);
+        setIsLoading(false);
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const onCatChanged = (category: string) => {
+    console.log("Category: ", category);
+  };
+
   return (
-    <View style={[styles.container, { paddingTop: safeTop }]}>
+    <ScrollView style={[styles.container, { paddingTop: safeTop }]}>
       <Header />
       <SearchBar />
       {isLoading ? (
@@ -44,8 +73,9 @@ const Page = (props: Props) => {
       ) : (
         <BreakingNews newList={breakingNews} />
       )}
-      <Categories />
-    </View>
+      <Categories onCategoryChange={onCatChanged} />
+      <NewsList newsList={news} />
+    </ScrollView>
   );
 };
 
