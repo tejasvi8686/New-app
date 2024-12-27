@@ -4,10 +4,11 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { NewsDataType } from "@/types";
-import Animated ,{
+import Animated, {
   Extrapolation,
   interpolate,
   SharedValue,
@@ -15,6 +16,7 @@ import Animated ,{
 } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors } from "@/constants/Colors";
+import { Link } from "expo-router";
 
 type Props = {
   sliderItem: NewsDataType;
@@ -48,29 +50,33 @@ export default function SliderItem({ sliderItem, index, scrollX }: Props) {
     };
   });
   return (
-    <Animated.View
-      style={[styles.itemWrapper, rnStyle]}
-      key={sliderItem.article_id}
-    >
-      <Image source={{ uri: sliderItem.image_url }} style={styles.image} />
-      <LinearGradient
-        colors={["transparent", "rgba(0,0,0,0.8)"]}
-        style={styles.gradient}
-      >
-        <View style={styles.sourceInfo}>
-          {sliderItem.source_icon && (
-            <Image
-              source={{ uri: sliderItem.source_icon }}
-              style={styles.sourceIcon}
-            />
-          )}
-          <Text style={styles.sourceName}>{sliderItem.source_name}</Text>
-        </View>
-        <Text style={styles.title} numberOfLines={2}>
-          {sliderItem.title}
-        </Text>
-      </LinearGradient>
-    </Animated.View>
+    <Link href={`/news/${sliderItem.article_id}`} asChild  >
+      <TouchableOpacity>
+        <Animated.View
+          style={[styles.itemWrapper, rnStyle]}
+          key={sliderItem.article_id}
+        >
+          <Image source={{ uri: sliderItem.image_url }} style={styles.image} />
+          <LinearGradient
+            colors={["transparent", "rgba(0,0,0,0.8)"]}
+            style={styles.gradient}
+          >
+            <View style={styles.sourceInfo}>
+              {sliderItem.source_icon && (
+                <Image
+                  source={{ uri: sliderItem.source_icon }}
+                  style={styles.sourceIcon}
+                />
+              )}
+              <Text style={styles.sourceName}>{sliderItem.source_name}</Text>
+            </View>
+            <Text style={styles.title} numberOfLines={2}>
+              {sliderItem.title}
+            </Text>
+          </LinearGradient>
+        </Animated.View>
+      </TouchableOpacity>
+    </Link>
   );
 }
 

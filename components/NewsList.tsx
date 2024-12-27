@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 import { NewsDataType } from "@/types";
 import { Colors } from "@/constants/Colors";
+import Loading from "./Loading";
 
 type Props = {
   newsList: Array<NewsDataType>;
@@ -10,22 +11,27 @@ type Props = {
 export default function NewsList({ newsList }: Props) {
   return (
     <View style={styles.container}>
-      {newsList.map((item, index) => (
-        <View key={index} style={styles.itemContainer}>
-          <Image source={{ uri: item.image_url }} style={styles.itemimg} />
-          <View style={styles.itemInfo}>
-            <Text style={styles.itemCategory}>{item.category}</Text>
-            <Text style={styles.itemTitle}>{item.title}</Text>
-            <View style={styles.itemSourceInfo}>
-              <Image
-                source={{ uri: item.source_icon }}
-                style={styles.itemSourceImg}
-              />
-              <Text style={styles.itemSouceName}>{item.source_name}</Text>
+      {newsList.length == 0 ? (
+        <Loading size={"large"} />
+      ) : (
+        newsList.map((item, index) => (
+          <View key={index} style={styles.itemContainer}>
+            <Image source={{ uri: item.image_url }} style={styles.itemimg} />
+            <View style={styles.itemInfo}>
+              <Text style={styles.itemCategory}>{item.category}</Text>
+              <Text style={styles.itemTitle}>{item.title}</Text>
+              <View style={styles.itemSourceInfo}>
+                <Image
+                  source={{ uri: item.source_icon }}
+                  style={styles.itemSourceImg}
+                />
+                <Text style={styles.itemSouceName}>{item.source_name}</Text>
+              </View>
             </View>
           </View>
-        </View>
-      ))}
+        ))
+      )}
+    
     </View>
   );
 }
