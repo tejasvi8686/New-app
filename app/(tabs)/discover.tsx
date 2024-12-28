@@ -4,6 +4,7 @@ import Searchbar from "@/components/Searchbar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
 import newsCategoryList from "@/constants/Categories";
+import CheckBox from "@/components/CheckBox";
 
 type Props = {};
 
@@ -15,7 +16,12 @@ const Page = (props: Props) => {
       <Text style={styles.title}>Categories </Text>
       <View style={styles.listContainer}>
         {newsCategoryList.map((item) => (
-          <Text key={item.id}> {item.title} </Text>
+          <CheckBox
+            key={item.id}
+            label={item.title}
+            checked={item.selected}
+            onPress={() => {}}
+          />
         ))}
       </View>
     </View>

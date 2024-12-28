@@ -21,7 +21,7 @@ const newsCategoryList = [
     id: 4,
     title: 'Entertainment',
     slug: 'entertainment',
-    selected: false,
+    selected: true,
   },
   {
     id: 5,
