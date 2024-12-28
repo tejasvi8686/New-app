@@ -5,9 +5,13 @@ import { Colors } from "@/constants/Colors";
 
 type Props = {
   withHorizontalPadding: boolean;
+  setSearchQuery: Function;
 };
 
-export default function Searchbar({ withHorizontalPadding }: Props) {
+export default function Searchbar({
+  withHorizontalPadding,
+  setSearchQuery,
+}: Props) {
   return (
     <View
       style={[
@@ -20,6 +24,9 @@ export default function Searchbar({ withHorizontalPadding }: Props) {
         <TextInput
           placeholder="Search..."
           placeholderTextColor={Colors.lightGrey}
+          style={styles.searchTxt}
+          autoCapitalize="none"
+          onChangeText={(query) => setSearchQuery(query)}
         />
       </View>
     </View>
