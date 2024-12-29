@@ -1,26 +1,38 @@
-# Expo News App Starter Template 👋
+# 🚀 React Native News App  
 
-This is a starter template for the expo news app tutorial on my YouTube channel.
+Welcome to the **React Native News App**! This application is designed to provide an engaging news-reading experience. Built using **React Native**, **TypeScript**, **AsyncStorage**, **Axios**, and the **NewsData.io API**, it allows users to explore news articles from various categories and save their favorites with ease.  
 
-## Get started
+## ✨ Features  
 
-1. Install dependencies
+### 🌟 Welcome Screen  
+- A visually appealing introduction screen with a "Get Started" button to launch the app and start exploring news articles.  
 
+### 📰 News and Categories  
+- Browse **breaking news** from around the globe.  
+- Explore articles from different categories, including Technology, Sports, Business, and more.  
+- Fetch news tailored to your selected category and country preferences.  
+
+### 🔍 Discover Tab  
+- Discover news articles using the **search bar** by entering keywords.  
+- Filter news by **categories** and **countries** for a more personalized experience.  
+
+### 🔖 Bookmark Feature  
+- **Save your favorite articles** as bookmarks directly from the Discover tab.  
+- Access saved bookmarks in the **Bookmark tab**, providing a centralized location for all your favorite news.  
+- **Easily remove bookmarks**, with real-time updates reflected in the bookmark list.  
+
+### ⚙️ Settings Screen  
+- A beautifully designed **Settings screen** showcasing a clean UI, with room for future functionality enhancements.  
+
+## 🛠️ Technologies Used  
+- **React Native**: For building a cross-platform mobile app.  
+- **TypeScript**: Ensuring type safety and better code maintainability.  
+- **AsyncStorage**: For local data storage and bookmark management.  
+- **Axios**: For seamless API integration.  
+- **NewsData.io API**: To fetch real-time news articles from various categories and regions.  
+
+## 🚀 Installation  
+
+1. Clone this repository:  
    ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-Extra dependencies added here
-
-- [Axios](https://www.npmjs.com/package/axios)
-- [AsyncStorage](https://react-native-async-storage.github.io/async-storage/docs/install/)
-- [Expo Linear Gradient](https://docs.expo.dev/versions/latest/sdk/linear-gradient/)
-- [Moment JS](https://www.npmjs.com/package/moment)
-
-# New-app
+   git clone <repository-url>
