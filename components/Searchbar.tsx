@@ -26,7 +26,7 @@ export default function Searchbar({
           placeholderTextColor={Colors.lightGrey}
           style={styles.searchTxt}
           autoCapitalize="none"
-          onChangeText={(query) => setSearchQuery(query)}
+          onChangeText={query => setSearchQuery(query)}
         />
       </View>
     </View>
@@ -35,7 +35,6 @@ export default function Searchbar({
 
 const styles = StyleSheet.create({
   container: {
-    //marginHorizontal: 20,
     marginBottom: 20,
   },
   searchBar: {

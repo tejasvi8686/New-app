@@ -14,12 +14,14 @@ import { NewsDataType } from "@/types";
 import Loading from "@/components/Loading";
 import { Colors } from "@/constants/Colors";
 import Moment from "moment";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Props = {};
 
 export default function NewsDetails(props: Props) {
   const [news, setNews] = useState<NewsDataType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [bookmark, setBookmark] = useState(false);
   const { id } = useLocalSearchParams<{ id: string }>();
 
   useEffect(() => {
@@ -42,25 +44,66 @@ export default function NewsDetails(props: Props) {
     }
   };
 
-  console.log("news=======>", news);
+  const saveBookmark = async (newsId: string) => {
+    setBookmark(true);
+    await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      if (res !== null) {
+        let data = res.find((value: string) => value === newsId);
+
+        if (data == null) {
+          res.push(newsId);
+          AsyncStorage.setItem("bookmark", JSON.stringify(res));
+          alert("News Saved");
+        }
+      } else {
+        let bookmark = [];
+        bookmark.push(newsId);
+        AsyncStorage.setItem("bookmark", JSON.stringify(bookmark));
+        alert("News Saved");
+      }
+    });
+  };
+
+  const removeBookmark = async (newsId: string) => {
+    setBookmark(false);
+    const bookmark = await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      return res.filter((id: string) => id !== newsId);
+    });
+
+    await AsyncStorage.setItem("bookmark", JSON.stringify(bookmark));
+    alert("News Removed");
+  };
 
   return (
     <>
       <Stack.Screen
-        options={() => ({
+        options={{
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()}>
-              <Ionicons name="arrow-back" size={24} color="black" />
+              <Ionicons name="arrow-back" size={22} color="black" />
             </TouchableOpacity>
           ),
+
           headerRight: () => (
-            <TouchableOpacity onPress={() => router.back()}>
-              <Ionicons name="heart-outline" size={24} color="black" />
+            <TouchableOpacity
+              onPress={() =>
+                bookmark
+                  ? removeBookmark(news[0].article_id)
+                  : saveBookmark(news[0].article_id)
+              }
+            >
+              <Ionicons
+                name={bookmark ? "heart" : "heart-outline"}
+                size={22}
+                color={bookmark ? "red" : "black"}
+              />
             </TouchableOpacity>
           ),
           title: "",
-        })}
-      ></Stack.Screen>
+        }}
+      />
       {isLoading ? (
         <Loading size={"large"} />
       ) : (
