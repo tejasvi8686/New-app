@@ -28,6 +28,12 @@ export default function NewsDetails(props: Props) {
     getNews();
   }, []);
 
+  useEffect(() => {
+    if (!isLoading) {
+      renderBookmark(news[0].article_id);
+    }
+  }, [isLoading]);
+
   const getNews = async () => {
     try {
       const URL = `https://newsdata.io/api/1/news?apikey=${process.env.EXPO_PUBLIC_API_KEY}&id=${id}`;
@@ -76,6 +82,17 @@ export default function NewsDetails(props: Props) {
     alert("News Removed");
   };
 
+  const renderBookmark = async (newsId: string) => {
+    await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+
+      if (res != null) {
+        let data = res.find((value: string) => value === newsId);
+        return data == null ? setBookmark(false) : setBookmark(true);
+      }
+    });
+  };
+
   return (
     <>
       <Stack.Screen
@@ -87,17 +104,16 @@ export default function NewsDetails(props: Props) {
           ),
 
           headerRight: () => (
-            <TouchableOpacity
-              onPress={() =>
-                bookmark
-                  ? removeBookmark(news[0].article_id)
-                  : saveBookmark(news[0].article_id)
-              }
-            >
+            <TouchableOpacity onPress={() => router.back()}>
               <Ionicons
                 name={bookmark ? "heart" : "heart-outline"}
                 size={22}
                 color={bookmark ? "red" : "black"}
+                onPress={() =>
+                  bookmark
+                    ? removeBookmark(news[0].article_id)
+                    : saveBookmark(news[0].article_id)
+                }
               />
             </TouchableOpacity>
           ),
